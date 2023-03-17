@@ -95,3 +95,4 @@
        password: "{{ db_user_password }}"
        priv:
          'mediawiki.*:ALL,GRANT'
+#Comments added to trigger the Git-Jenkins webhook based trigger
