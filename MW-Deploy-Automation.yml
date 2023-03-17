@@ -1,0 +1,97 @@
+---
+ - hosts: localhost
+   connection: local
+   gather_facts: no
+   tasks:
+   - name: Including variables
+     include_vars:
+       file: Mediawiki-Ansible-Automation-vars.yml
+
+   - name: Installing the neccessary packages to support Mediawiki Deployment
+     become: yes
+     become_user: root
+     apt:
+       pkg:
+         - apache2
+         - mysql-server
+         - php
+         - php-mysql
+         - php-xml
+         - php-mbstring
+         - php-intl
+         - python3-pip
+         - libapache2-mod-php
+       state: present
+       update_cache: yes
+
+   - name: Downloading Mediawiki
+     become: yes
+     get_url:
+       url: "{{ mw_url }}"
+       dest: "{{ temp_dest }}"
+
+   - name: Create a Mediawiki directory
+     become: yes
+     file:
+       path: "{{ mw_path }}"
+       state: directory
+
+   - name: Extract Mediawiki tar
+     become: yes
+     become_user: root
+     unarchive:
+       src: /tmp/mediawiki-1.37.1.tar.gz
+       dest: "{{ mw_path }}"
+       remote_src: yes
+
+   - name: Symlink for Mediawiki
+     become: yes
+     file:
+       src: /var/lib/mediawiki/mediawiki-1.37.1
+       dest: /var/www/html/mediawiki
+       state: link
+
+   - name: Updating Apache2 enabled Sites
+     become: yes
+     replace:
+      path: /etc/apache2/sites-enabled/000-default.conf
+      regexp: 'DocumentRoot \/var\/www\/html$'
+      replace: 'DocumentRoot /var/www/html/mediawiki'
+
+   - name: Restarting Apache2 service
+     become: yes
+     service:
+       name: apache2
+       state: restarted
+       enabled: yes
+
+   - name: Pip pre-requites for SQL
+     become: yes
+     pip:
+       name: PyMySQL
+
+   - name: Enable MySQL
+     become: yes
+     service:
+       name: mysql
+       state: started
+       enabled: yes
+
+   - name: Create Database for Mediawiki
+     become: yes
+     become_user: root
+     community.mysql.mysql_db:
+       login_unix_socket: /var/run/mysqld/mysqld.sock
+       name: "{{ db_name }}"
+       state: present
+
+   - name: Creating Mediawiki Database user
+     become: yes
+     become_user: root
+     community.mysql.mysql_user:
+       login_unix_socket: /var/run/mysqld/mysqld.sock
+       state: present
+       name: "{{ db_user_name }}"
+       password: "{{ db_user_password }}"
+       priv:
+         'mediawiki.*:ALL,GRANT'
