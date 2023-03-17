@@ -95,3 +95,4 @@
        password: "{{ db_user_password }}"
        priv:
          'mediawiki.*:ALL,GRANT'
+         
