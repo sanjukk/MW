@@ -3,8 +3,7 @@
    connection: local
    vars_files:
      - Mediawiki-Ansible-Automation-vars.yml
-    
-   # gather_facts: no
+     # gather_facts: no
    tasks:
  #  - name: Including variables
   #   include_vars:
