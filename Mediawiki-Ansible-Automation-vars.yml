@@ -1,0 +1,13 @@
+---
+# Download URL
+mw_url: https://releases.wikimedia.org/mediawiki/1.37/mediawiki-1.37.1.tar.gz
+# Temporary download location
+temp_dest: /tmp
+# Mediawiki Directory
+mw_path: /var/lib/mediawiki
+# Database Name
+db_name: mediawiki
+# Database user name
+db_user_name: mediawiki
+# Database user password
+db_user_password: Bengaluru
