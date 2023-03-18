@@ -1,11 +1,14 @@
 ---
  - hosts: localhost
    connection: local
-   gather_facts: no
+   vars_files:
+     - Mediawiki-Ansible-Automation-vars.yml
+    
+   # gather_facts: no
    tasks:
-   - name: Including variables
-     include_vars:
-       file: Mediawiki-Ansible-Automation-vars.yml
+ #  - name: Including variables
+  #   include_vars:
+   #    file: Mediawiki-Ansible-Automation-vars.yml
 
    - name: Installing the neccessary packages to support Mediawiki Deployment
      become: yes
