@@ -12,6 +12,8 @@
    - name: Installing the neccessary packages to support Mediawiki Deployment
      become: yes
      become_user: root
+     vars:
+       ansible_become: false
      apt:
        pkg:
          - apache2
