@@ -4,8 +4,6 @@
  #  vars_files:
  #    - Mediawiki-Ansible-Automation-vars.yml
      # gather_facts: no
-     become: yes
-     become_user: root
    tasks:
  #  - name: Including variables
   #   include_vars:
