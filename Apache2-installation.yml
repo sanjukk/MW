@@ -17,4 +17,5 @@
        pkg:
          - apache2
        state: present
+     apt:
        update_cache: yes
