@@ -30,12 +30,14 @@
 
    - name: Downloading Mediawiki
      become: yes
+     become_user: root
      get_url:
        url: "{{ mw_url }}"
        dest: "{{ temp_dest }}"
 
    - name: Create a Mediawiki directory
      become: yes
+     become_user: root
      file:
        path: "{{ mw_path }}"
        state: directory
@@ -50,6 +52,7 @@
 
    - name: Symlink for Mediawiki
      become: yes
+     become_user: root
      file:
        src: /var/lib/mediawiki/mediawiki-1.37.1
        dest: /var/www/html/mediawiki
@@ -57,6 +60,7 @@
 
    - name: Updating Apache2 enabled Sites
      become: yes
+     become_user: root
      replace:
       path: /etc/apache2/sites-enabled/000-default.conf
       regexp: 'DocumentRoot \/var\/www\/html$'
@@ -64,6 +68,7 @@
 
    - name: Restarting Apache2 service
      become: yes
+     become_user: root
      service:
        name: apache2
        state: restarted
@@ -71,11 +76,13 @@
 
    - name: Pip pre-requites for SQL
      become: yes
+     become_user: root
      pip:
        name: PyMySQL
 
    - name: Enable MySQL
      become: yes
+     become_user: root
      service:
        name: mysql
        state: started
