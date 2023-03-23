@@ -5,12 +5,12 @@
  #    - Mediawiki-Ansible-Automation-vars.yml
      # gather_facts: no
    tasks:
- #  - name: Including variables
+ # - name: Including variables
   #   include_vars:
    #    file: Mediawiki-Ansible-Automation-vars.yml
-    - name: Installing the neccessary packages to support Mediawiki Deployment
- #    become: yes
-      become_user: root
+   - name: Installing the neccessary packages to support Mediawiki Deployment
+ #   become: yes
+     become_user: root
  #    vars:
   #   ansible_become: yes
      apt:
