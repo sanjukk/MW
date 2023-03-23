@@ -1,6 +1,7 @@
 ---
  - hosts: localhost
    connection: local
+   sudo: yes
    vars_files:
      - Mediawiki-Ansible-Automation-vars.yml
      # gather_facts: no
