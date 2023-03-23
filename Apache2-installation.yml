@@ -13,7 +13,7 @@
      become: yes
      become_user: root
  #    vars:
-  #     ansible_become: false
+     ansible_become: false
      apt:
        pkg:
          - apache2
